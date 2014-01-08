@@ -1,0 +1,24 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+      	<% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+        <%= gravatar_for @user, size: 52 %>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>
+<table align= "center" boder="1" cellspadding="1">
+          <tr>
+            <td>name</td>
+            <td>email</td>
+          </tr> 
+          <tr>
+            <td><%= @user.name %></td>
+            <td><%= @user.email %></td>
+          </tr> 
+</table>

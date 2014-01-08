@@ -3,8 +3,10 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 gem 'bootstrap-sass', '2.1'
 gem 'rails', '3.2.9'
-
-gem 'sqlite3'
+gem 'bcrypt-ruby', '3.0.1'
+gem 'factory_girl_rails', '4.1.0'
+gem 'faker', '1.0.1'
+gem 'mysql2'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -20,5 +22,6 @@ end
 gem 'jquery-rails'
 group :test, :development do
   gem "rspec-rails", "~> 2.11.0"
+  gem 'annotate', '2.5.0'
 end
 
