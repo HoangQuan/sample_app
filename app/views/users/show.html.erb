@@ -22,3 +22,20 @@
             <td><%= @user.email %></td>
           </tr> 
 </table>
+<table class = "table">
+  <% Post.all.each  do |post| %>
+    <tr>
+      <td><%= gravatar_for post.user, size: 40 %></td>
+      <td><%= post.content %></td>
+    </tr>
+  <% end %>
+</table>
+<h3>create post</h3>
+    <%= form_for @post do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :content %>
+      <%= f.text_field :content %>
+
+      <%= f.submit "Send", class: "btn btn-large btn-primary" %>
+    <% end %>

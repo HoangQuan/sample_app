@@ -1,25 +1,25 @@
-class UsersController < ApplicationController
+class PostsController < ApplicationController
   before_filter :signed_in_user, only: [:index,:edit, :update]
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: :destroy
+  before_filter :build_post, only: [:new, :create, :index]
+  before_filter :load_post, only: [:edit, :show, :update, :destroy]
   def new
-  	@user = User.new
   end
   def show
-  	@user = User.find(params[:id])
-  	#@user = User.find(params[:id])
   end
   def index
-    #@users = User.paginate(page: params[:page])
-    @users=User.all
+    limit = 3
+    if params[:page].to_i >= 1 && params[:page].to_i <= (Post.count.to_f/3).ceil
+      offset = params[:page] ? (params[:page].to_i - 1)*limit : 0
+    end
+    @posts=Post.offset(offset).limit(limit)
   end
   def create
-    @user = User.new(params[:user])
-    if @user.save
+    @post.attributes = params[:post]
+    if @post.save
       # Handle a successful save.
-      sign_in @user
-      flash[:result] = "Welcome to the Sample App!"
-      redirect_to @user
+      redirect_to posts_path()
     else
       #redirect_to root_path
       flash[:error] = "Invalid User!"
@@ -27,10 +27,10 @@ class UsersController < ApplicationController
     end
   end
   def edit
-    @user=User.find(params[:id])
+    @post=Post.find(params[:id])
   end
   def update
-    @user=User.find(params[:id])
+    @post=Post.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:succss]="Profiles updated"
       sign_in @user
@@ -41,8 +41,8 @@ class UsersController < ApplicationController
     end
   end
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
+    Post.find(params[:id]).destroy
+    flash[:success] = "Post destroyed."
     redirect_to users_url
   end
   private
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     end
 
     def correct_user
-      @user = User.find(params[:id])
+      @post = Post.find(params[:id])
       redirect_to(root_path)  unless current_user?(@user)
     end
     def admin_user
@@ -63,4 +63,12 @@ class UsersController < ApplicationController
       redirect_to(root_path)  unless current_user.admin?
     end
 
+    def build_post
+      @post = current_user.posts.build
+    end
+
+
+    def load_post
+      @post = Post.find(params[:id])
+    end
 end

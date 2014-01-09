@@ -1,0 +1,33 @@
+<div class = "post-show">
+<table class = "table table-bordered">
+    <tr>
+      <td width = "30px"><%= gravatar_for @post.user, size: 30 %></td>
+      <td><%= @post.content %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+      	<table class = "table comment">
+      		<tr>
+      			<th colspan = "2">Conment</th>
+      		</tr>
+      		<tr>
+      			<td width="25">Conment</td>
+      			<td>Conment</td>
+      		</tr>
+      	</table>
+      </td>
+    </tr>
+  <tr>
+  	<td colspan = "2" align="center">
+  		<%= link_to "Fisrt","?page=1", id: "first", class: "btn" %>
+  		<%= link_to "<","#", id: "previous", class: "btn" %>
+  		<% total_page = (Post.count.to_f/3).ceil%>
+  		<% (1..total_page).each do |page|%>
+  			<%= link_to "#{page}","?page=#{page}", id: "#{page}", class: "btn" %>
+  		<% end %>
+  		<%= link_to ">","#", id: "next", class: "btn" %>
+  		<%= link_to "Last", "?page=#{total_page}", id: "last", class: "btn" %></td>
+  </tr>
+</table>
+</div>

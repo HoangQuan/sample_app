@@ -188,6 +188,7 @@ DEPENDENCIES
   guard-spork (= 1.2.0)
   jquery-rails
   mysql2
+  pry
   rails (= 3.2.9)
   rspec-rails (~> 2.11.0)
   sass-rails (~> 3.2.3)
