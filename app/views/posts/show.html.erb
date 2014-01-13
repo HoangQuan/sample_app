@@ -1,33 +1,213 @@
 <div class = "post-show">
-<table class = "table table-bordered">
+<table class = "table table-bordered" id="post-table">
     <tr>
-      <td width = "30px"><%= gravatar_for @post.user, size: 30 %></td>
+      <td width = "45px"><%= gravatar_for @post.user, size: 40 %></td>
       <td><%= @post.content %></td>
+    </tr>
+    <tr>
+      <th colspan = "2">Conment</th>
     </tr>
     <tr>
       <td></td>
       <td>
       	<table class = "table comment">
-      		<tr>
-      			<th colspan = "2">Conment</th>
-      		</tr>
-      		<tr>
-      			<td width="25">Conment</td>
-      			<td>Conment</td>
-      		</tr>
+          <div id="tr-comment">
+        		<%= render "comments" %>
+          </div>
       	</table>
       </td>
     </tr>
   <tr>
-  	<td colspan = "2" align="center">
-  		<%= link_to "Fisrt","?page=1", id: "first", class: "btn" %>
-  		<%= link_to "<","#", id: "previous", class: "btn" %>
-  		<% total_page = (Post.count.to_f/3).ceil%>
-  		<% (1..total_page).each do |page|%>
-  			<%= link_to "#{page}","?page=#{page}", id: "#{page}", class: "btn" %>
-  		<% end %>
-  		<%= link_to ">","#", id: "next", class: "btn" %>
-  		<%= link_to "Last", "?page=#{total_page}", id: "last", class: "btn" %></td>
+    <td></td>
+  	<td>
+      <div class="td-paging">
+    		<%= render "paging"%>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <%= form_for @post.comments.build, remote: true, url: { controller: "comments", action: "create" } do |f| %>
+        <%= f.text_field :content %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.hidden_field :post_id, value: @post.id %>
+        <%= f.submit "Send", class: "btn btn-large comment-submint" %>
+      <% end %>
+    </td>
   </tr>
 </table>
 </div>
+<script type="text/javascript">
+$("#comment_content").keypress(function(event) {
+  if (event.which == 13) {
+      event.preventDefault();
+      $("form").submit();
+  }
+});
+
+  var current_page = parseInt('<%= params[:page] ? params[:page].to_i : 1 %>');
+  <% total_page = (@post.comments.count.to_f/5).ceil %>
+  var total_page = '<%= total_page %>';
+  $(document).on("click", "#first", function (e){
+    e.preventDefault();
+    current_page = "1";
+    $.ajax({
+      url: '<%= post_path(@post) %>',
+      dataType: 'JSON',
+      data: "page=" + current_page,
+      success: function(data){
+        var comment_table = "";
+        for(var i = 0; i< data.length; i++){
+          comment_table += '<tr>\
+            <td width="25"><img alt="quanhv" class="gravatar" src="https://secure.gravatar.com/avatar/3515e3e3289f38410287816c32527655"></td>\
+            <td>'+data[i].content+'</td>\
+            <a href="/comments/'+data[i].id+'" class="delete" data-confirm="delete" data-method="delete" rel="nofollow">x</a>\
+          </tr>';
+        }
+        $(".comment").html(comment_table);
+        $(".td-paging").html('<%= link_to "Fisrt","#", id: "first", class: "btn" %> \
+                              <%= link_to "<","#", id: "previous", class: "btn" %>\
+                              <% total_page = total_page %>\
+                              <% current_page = 1 %>\
+                              <%= link_to "#{current_page - 1}","#", id: "page#{current_page - 1}", class: "btn" if current_page > 1%>\
+                              <%= link_to "#{current_page}","#", id: "page#{current_page}", class: "btn" %>\
+                              <%= link_to "#{current_page + 1}","#", id: "page#{current_page + 1}", class: "btn" if current_page < total_page %>\
+                              <%= link_to ">","#", id: "next", class: "btn" %>\
+                              <%= link_to "Last", "#", id: "last", class: "btn" %>');
+      }
+    });
+  })
+  $(document).on("click", "#previous", function (e){
+    e.preventDefault();
+    if (current_page == 1){
+      alert("trang dau roi con gi nua");
+      current_page = 1;
+    }else{
+      current_page -= 1 ;
+    }
+    $.ajax({
+      url: '<%= post_path(@post) %>',
+      dataType: 'JSON',
+      data: "page=" + current_page,
+      success: function(data){
+        var comment_table = "";
+        for(var i = 0; i< data.length; i++){
+          comment_table += '<tr>\
+            <td width="25"><img alt="quanhv" class="gravatar" src="https://secure.gravatar.com/avatar/3515e3e3289f38410287816c32527655"></td>\
+            <td>'+data[i].content+'</td>\
+            <a href="/comments/'+data[i].id+'" class="delete" data-confirm="delete" data-method="delete" rel="nofollow">x</a>\
+          </tr>';
+        }
+        $(".comment").html(comment_table);
+        $(".td-paging").html('<%= link_to "Fisrt","#", id: "first", class: "btn" %> \
+                              <%= link_to "<","#", id: "previous", class: "btn" %>\
+                              <% total_page = total_page %>\
+                              <% current_page = current_page - 1 unless current_page == 1%>\
+                              <%= link_to "#{current_page - 1}","#", id: "page#{current_page - 1}", class: "btn" if current_page > 1%>\
+                              <%= link_to "#{current_page}","#", id: "page#{current_page}", class: "btn" %>\
+                              <%= link_to "#{current_page + 1}","#", id: "page#{current_page + 1}", class: "btn" if current_page < total_page %>\
+                              <%= link_to ">","#", id: "next", class: "btn" %>\
+                              <%= link_to "Last", "#", id: "last", class: "btn" %>');
+      }
+    });
+  })
+
+  $(document).on("click", "#next", function (e){
+    e.preventDefault();
+    var trang_cuoi = parseInt('<%= total_page %>');
+    if (current_page == trang_cuoi){
+      alert("trang cmn cuoi roi con gi nua");
+      current_page = trang_cuoi;
+    }else{
+      current_page= parseInt(current_page) + 1 ;
+    }
+    $.ajax({
+      url: '<%= post_path(@post) %>',
+      dataType: 'JSON',
+      data: "page=" + current_page,
+      success: function(data){
+        var comment_table = "";
+        for(var i = 0; i< data.length; i++){
+          comment_table += '<tr>\
+            <td width="25"><img alt="quanhv" class="gravatar" src="https://secure.gravatar.com/avatar/3515e3e3289f38410287816c32527655"></td>\
+            <td>'+data[i].content+'</td>\
+            <a href="/comments/'+data[i].id+'" class="delete" data-confirm="delete" data-method="delete" rel="nofollow">x</a>\
+          </tr>';
+        }
+        $(".comment").html(comment_table);
+        $(".td-paging").html('<%= link_to "Fisrt","#", id: "first", class: "btn" %> \
+                              <%= link_to "<","#", id: "previous", class: "btn" %>\
+                              <% total_page = total_page %>\
+                              <% current_page = current_page + 1 %>\
+                              <%= link_to "#{current_page - 1}","#", id: "page#{current_page - 1}", class: "btn" if current_page > 1%>\
+                              <%= link_to "#{current_page}","#", id: "page#{current_page}", class: "btn" %>\
+                              <%= link_to "#{current_page + 1}","#", id: "page#{current_page + 1}", class: "btn" if current_page < total_page %>\
+                              <%= link_to ">","#", id: "next", class: "btn" %>\
+                              <%= link_to "Last", "#", id: "last", class: "btn" %>');
+      }
+    });
+  })
+
+  $(document).on("click", "#last", function (e){
+    e.preventDefault();
+    current_page = '<%= total_page %>';
+    $.ajax({
+      url: '<%= post_path(@post) %>',
+      dataType: 'JSON',
+      data: "page=" + current_page,
+      success: function(data){
+        var comment_table = "";
+          for(var i = 0; i< data.length; i++){
+            comment_table += '<tr>\
+              <td width="25"><img alt="quanhv" class="gravatar" src="https://secure.gravatar.com/avatar/3515e3e3289f38410287816c32527655"></td>\
+              <td>'+data[i].content+'</td>\
+              <a href="/comments/'+data[i].id+'" class="delete" data-confirm="delete" data-method="delete" rel="nofollow">x</a>\
+            </tr>';
+          }
+        $(".comment").html(comment_table);
+        $(".td-paging").html('<%= link_to "Fisrt","#", id: "first", class: "btn" %> \
+                              <%= link_to "<","#", id: "previous", class: "btn" %>\
+                              <% total_page = total_page %>\
+                              <% current_page = total_page %>\
+                              <%= link_to "#{current_page - 1}","#", id: "page#{current_page - 1}", class: "btn" if current_page > 1%>\
+                              <%= link_to "#{current_page}","#", id: "page#{current_page}", class: "btn" %>\
+                              <%= link_to "#{current_page + 1}","#", id: "page#{current_page + 1}", class: "btn" if current_page < total_page %>\
+                              <%= link_to ">","#", id: "next", class: "btn" %>\
+                              <%= link_to "Last", "#", id: "last", class: "btn" %>');
+      }
+    });
+  })
+
+  <% (1..total_page).each do |i| %>
+    $(document).on("click", "#page<%=i%>", function (e){
+      e.preventDefault();
+      current_page = '<%= i %>';
+      $.ajax({
+        url: '<%= post_path(@post) %>',
+        dataType: 'JSON',
+        data: "page=" + current_page,
+        success: function(data){
+          var comment_table = "";
+          for(var i = 0; i< data.length; i++){
+            comment_table += '<tr>\
+              <td width="25"><img alt="quanhv" class="gravatar" src="https://secure.gravatar.com/avatar/3515e3e3289f38410287816c32527655"></td>\
+              <td>'+data[i].content+'\
+              <a href="/comments/'+data[i].id+'" class="delete" data-confirm="delete" data-method="delete" rel="nofollow">x</a>\
+            </tr>';
+          }
+        $(".comment").html(comment_table);
+        $(".td-paging").html('<%= link_to "Fisrt","#", id: "first", class: "btn" %> \
+                              <%= link_to "<","#", id: "previous", class: "btn" %>\
+                              <% total_page = total_page %>\
+                              <% current_page = i %>\
+                              <%= link_to "#{current_page - 1}","#", id: "page#{current_page - 1}", class: "btn" if current_page > 1%>\
+                              <%= link_to "#{current_page}","#", id: "page#{current_page}", class: "btn" %>\
+                              <%= link_to "#{current_page + 1}","#", id: "page#{current_page + 1}", class: "btn" if current_page < total_page %>\
+                              <%= link_to ">","#", id: "next", class: "btn" %>\
+                              <%= link_to "Last", "#", id: "last", class: "btn" %>');
+        }
+      });
+    })
+  <% end %>
+</script>

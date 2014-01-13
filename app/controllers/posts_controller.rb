@@ -1,12 +1,21 @@
 class PostsController < ApplicationController
   before_filter :signed_in_user, only: [:index,:edit, :update]
   before_filter :correct_user,   only: [:edit, :update]
-  before_filter :admin_user,     only: :destroy
+  # before_filter :admin_user,     only: :destroy
   before_filter :build_post, only: [:new, :create, :index]
   before_filter :load_post, only: [:edit, :show, :update, :destroy]
   def new
   end
   def show
+    limit = 5
+    if params[:page].to_i >= 1 && params[:page].to_i <= ( @post.comments.count.to_f/5).ceil
+      offset = params[:page] ? (params[:page].to_i - 1)*limit : 0
+    end
+    @comments = @post.comments.offset(offset).limit(limit).order_by_created
+    respond_to do |format|
+      format.json { render json: @comments }
+      format.html
+    end
   end
   def index
     limit = 3
@@ -43,7 +52,7 @@ class PostsController < ApplicationController
   def destroy
     Post.find(params[:id]).destroy
     flash[:success] = "Post destroyed."
-    redirect_to users_url
+    redirect_to posts_url
   end
   private
 

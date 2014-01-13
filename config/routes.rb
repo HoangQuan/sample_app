@@ -3,6 +3,7 @@ SampleApp::Application.routes.draw do
   resources :users do
   end
   resources :posts
+  resources :comments
   resources :sessions, only: [:new, :create, :destroy]
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'

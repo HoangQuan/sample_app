@@ -1,0 +1,11 @@
+<% @comments.each do |comment|%>
+	<tr>
+		<td width="25"><%= gravatar_for comment.user, size:25 %></td>
+		<td>
+			<div class ="comment-content">
+				<%= comment.content %>
+				<%=link_to "x", comment_path(comment), method: :delete, data: {confirm: "delete"}, class: "delete"%>
+			</div>
+		</td>
+	</tr>
+<% end %>

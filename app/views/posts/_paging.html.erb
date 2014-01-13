@@ -1,0 +1,9 @@
+<%= link_to "Fisrt","#", id: "first", class: "btn" %>
+<%= link_to "<","#", id: "previous", class: "btn" %>
+<% total_page = (@post.comments.count.to_f/5).ceil%>
+<% current_page = params[:page] ? params[:page].to_i : 1 %>
+<%= link_to "#{current_page - 1}","#", id: "page#{current_page - 1}", class: "btn" if current_page > 1%>
+<%= link_to "#{current_page}","#", id: "page#{current_page}", class: "btn" %>
+<%= link_to "#{current_page + 1}","#", id: "page#{current_page + 1}", class: "btn" if current_page < total_page %>
+<%= link_to ">","#", id: "next", class: "btn" %>
+<%= link_to "Last", "#", id: "last", class: "btn" %>
