@@ -1,0 +1,14 @@
+<% @microcomments = !@microcomments.nil? ? @microcomments : comment.microcomments%>
+<div class="microcomment-content" >
+<% @microcomments.each_with_index do |mcomment, i|%>
+<tr>
+	<td width="25"><%= gravatar_for mcomment.comment.user, size:25 %></td>
+	<td>
+		<div class ="">
+			<%= mcomment.content %>
+			
+		</div>
+	</td>
+</tr>
+<% end %>
+</div>

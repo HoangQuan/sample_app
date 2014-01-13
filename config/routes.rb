@@ -4,6 +4,7 @@ SampleApp::Application.routes.draw do
   end
   resources :posts
   resources :comments
+  resources :microcomments
   resources :sessions, only: [:new, :create, :destroy]
   root to: 'static_pages#home'
   match '/help', to: 'static_pages#help'
@@ -22,6 +23,7 @@ SampleApp::Application.routes.draw do
   get "static_pages/about"
   get "static_pages/help"
   get "static_pages/contact"
+  
   
   #-----------------
 

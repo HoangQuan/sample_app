@@ -3,6 +3,7 @@ class Comment < ActiveRecord::Base
 
   belongs_to :post
   belongs_to :user
+  has_many :microcomments
 
   scope :order_by_created, -> {order("created_at DESC")}
 end

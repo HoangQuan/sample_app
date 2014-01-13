@@ -1,0 +1,5 @@
+$("#tr-microcomment").html("");
+// $("#tr-comment").html("");
+$("#tr-microcomment").html("<%= escape_javascript(render('posts/microcomments')) %>")
+$("#microcomment_content").val("");
+$(".microcomment-form").hide();
