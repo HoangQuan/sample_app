@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
-  # before_filter :signed_in_user, only: [:index,:edit, :update]
-  # before_filter :correct_user,   only: [:edit, :update]
+  before_filter :signed_in_user, only: [:index,:edit, :update]
+  before_filter :correct_user,   only: [:edit, :update]
   # before_filter :admin_user,     only: :destroy
   # before_filter :build_comment, only: [:new, :create, :index]
   before_filter :load_post, only: :destroy
@@ -15,8 +15,8 @@ class CommentsController < ApplicationController
   end
   def create
     @post = Post.find(params[:comment][:post_id])
-    limit = 5
-    if params[:page].to_i >= 1 && params[:page].to_i <= (@post.comments.count.to_f/5).ceil
+    limit = 3
+    if params[:page].to_i >= 1 && params[:page].to_i <= (@post.comments.count.to_f/3).ceil
       offset = params[:page] ? (params[:page].to_i - 1)*limit : 0
     end
     @comment =  Comment.new(params[:comment])

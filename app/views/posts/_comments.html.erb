@@ -1,24 +1,24 @@
 <% @comments.each_with_index do |comment, i|%>
-<table>
+<table class="table table-bordered table-striped">
 	<tr>
 		<td width="25"><%= gravatar_for comment.user, size:25 %></td>
 		<td>
 			<div class ="comment-content">
 				<%= comment.content %>
 				<%=link_to "x", comment_path(comment), method: :delete, data: {confirm: "delete"}, class: "delete"%>
-				<table class = "table microcomment">
-          <div id="tr-microcomment">
-        		<%= render "posts/microcomments", comment: comment%>
-					</div>
+				<table class = "table microcomment table-bordered table-striped">
+          <tr>
+          	<td colspan="2" id="tr-microcomment<%=comment.id%>">
+        		<%= render "posts/microcomments", comment: comment %>
+						</td>
+					</tr>
 					<tr>
-							<div class="microcomment-form<%=i%> microcomment-form" style="display: none">
-								<%= form_for comment.microcomments.build , remote: true, url: { controller: "microcomments", action: "create" } do |ff| %>
-							    <%= ff.text_field :content, class: "microcomment_content" %>
-							    <%= ff.hidden_field :comment_id, value: comment.id %>
-							    <%= ff.submit "Send", class: "btn microcomment-submit" %>
-							  <% end %>
+						<td colspan=2>
+							<div class="microcomment-form<%=comment.id%> microcomment-form">
+								
 							</div>
-						</tr>
+						</td>
+					</tr>
       	</table>
       	<%=link_to "Comment", "#", class: "microcomment_link#{i}"%>
 			</div>
@@ -31,7 +31,12 @@
 	<% @comments.each_with_index do |comment, i| %>
   $(document).on("click", ".microcomment_link<%=i%>", function (e){
     e.preventDefault();
-    $(".microcomment-form<%=i%>").show();
+    $(".microcomment-form<%=comment.id%>").html('<%= form_for comment.microcomments.build , remote: true, url: { controller: "microcomments", \
+    	action: "create" }, id: "new_microcomment#{comment.id}" do |ff| %>\
+							    <%= ff.text_field :content, class: "microcomment_content_field" %>\
+							    <%= ff.hidden_field :comment_id, value: comment.id %>\
+							    <%= ff.submit "Send", class: "btn microcomment-submit" %>\
+							  <% end %>');
   })
   <% end %>
 </script>

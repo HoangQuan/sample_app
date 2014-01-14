@@ -7,13 +7,13 @@ class PostsController < ApplicationController
   def new
   end
   def show
-    limit = 5
-    if params[:page].to_i >= 1 && params[:page].to_i <= ( @post.comments.count.to_f/5).ceil
+    limit = 3
+    if params[:page].to_i >= 1 && params[:page].to_i <= ( @post.comments.count.to_f/3).ceil
       offset = params[:page] ? (params[:page].to_i - 1)*limit : 0
     end
     @comments = @post.comments.offset(offset).limit(limit).order_by_created
     respond_to do |format|
-      format.json { render json: @comments }
+      format.js
       format.html
     end
   end

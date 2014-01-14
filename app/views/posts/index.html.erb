@@ -1,6 +1,6 @@
 <% provide(:title, current_user.name) %>
 <div class = "content">
-<table class = "table table-bordered">
+<table class = "table table-bordered table-striped">
   <% @posts.each  do |post| %>
     <tr>
       <td width="20%"><%= gravatar_for post.user, size: 30 %></td>

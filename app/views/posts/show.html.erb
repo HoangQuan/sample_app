@@ -10,7 +10,7 @@
   <tr>
     <td></td>
     <td>
-    	<div class = "table comment">
+    	<div class = "table table-bordered table-striped comment">
         <div id="tr-comment">
       		<%= render "comments" %>
         </div>
@@ -45,77 +45,4 @@ $("#comment_content").keypress(function(event) {
       $("form").submit();
   }
 });
-var current_page = parseInt('<%= params[:page] ? params[:page].to_i : 1 %>');
-<% total_page = (@post.comments.count.to_f/5).ceil %>
-var total_page = '<%= total_page %>';
-$(document).on("click", "#first", function (e){
-  e.preventDefault();
-  current_page = "1";
-  paging(current_page);
-})
-function paging(current_page){
-$.ajax({
-  url: '<%= post_path(@post) %>',
-  dataType: 'JSON',
-  data: "page=" + current_page,
-  success: function(data){
-    var comment_table = "";
-    for(var i = 0; i< data.length; i++){
-      comment_table += '<tr>\
-        <td width="25"><img alt="quanhv" class="gravatar" src="https://secure.gravatar.com/avatar/3515e3e3289f38410287816c32527655"></td>\
-        <td>'+data[i].content+'</td>\
-        <a href="/comments/'+data[i].id+'" class="delete" data-confirm="delete" data-method="delete" rel="nofollow">x</a>\
-      </tr>';
-    }
-    $(".comment").html(comment_table);
-    $(".td-paging").html('<%= link_to "Fisrt","#", id: "first", class: "btn" %> \
-                          <%= link_to "<","#", id: "previous", class: "btn" %>\
-                          <% total_page = total_page %>\
-                          <% current_page = 1 %>\
-                          <%= link_to "#{current_page - 1}","#", id: "page#{current_page - 1}", class: "btn" if current_page > 1%>\
-                          <%= link_to "#{current_page}","#", id: "page#{current_page}", class: "btn" %>\
-                          <%= link_to "#{current_page + 1}","#", id: "page#{current_page + 1}", class: "btn" if current_page < total_page %>\
-                          <%= link_to ">","#", id: "next", class: "btn" %>\
-                          <%= link_to "Last", "#", id: "last", class: "btn" %>');
-    }
-  });
-}
-  
-  $(document).on("click", "#previous", function (e){
-    e.preventDefault();
-    if (current_page == 1){
-      alert("trang dau roi con gi nua");
-      current_page = 1;
-    }else{
-      current_page -= 1 ;
-    }
-    paging(current_page);
-  })
-
-  $(document).on("click", "#next", function (e){
-    e.preventDefault();
-    var trang_cuoi = parseInt('<%= total_page %>');
-    if (current_page == trang_cuoi){
-      alert("trang cmn cuoi roi con gi nua");
-      current_page = trang_cuoi;
-    }else{
-      current_page= parseInt(current_page) + 1 ;
-    }
-    paging(current_page);
-  })
-
-  $(document).on("click", "#last", function (e){
-    e.preventDefault();
-    current_page = '<%= total_page %>';
-    paging(current_page);
-  })
-
-  <% (1..total_page).each do |i| %>
-    $(document).on("click", "#page<%=i%>", function (e){
-      e.preventDefault();
-      current_page = '<%= i %>';
-      paging(current_page);
-    })
-  <% end %>
-
 </script>

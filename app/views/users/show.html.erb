@@ -22,16 +22,17 @@
             <td><%= @user.email %></td>
           </tr> 
 </table>
-<table class = "table">
-  <% Post.all.each  do |post| %>
+<table class = "table table-bordered table-striped">
+  <% current_user.posts.each  do |post| %>
     <tr>
       <td><%= gravatar_for post.user, size: 40 %></td>
       <td><%= post.content %></td>
+      <td><%= "Đã có lượt #{post.comments.count} comments" %></td>
     </tr>
   <% end %>
 </table>
 <h3>create post</h3>
-    <%= form_for @post do |f| %>
+    <%= form_for current_user.posts.build do |f| %>
       <%= render 'shared/error_messages' %>
 
       <%= f.label :content %>

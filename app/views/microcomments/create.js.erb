@@ -1,5 +1,6 @@
 $("#tr-microcomment").html("");
-// $("#tr-comment").html("");
-$("#tr-microcomment").html("<%= escape_javascript(render('posts/microcomments')) %>")
-$("#microcomment_content").val("");
-$(".microcomment-form").hide();
+$("#test1").html("");
+$("#tr-microcomment<%=@comment.id%>").html("")
+$("#tr-microcomment<%=@comment.id%>").html("<%= escape_javascript(render('posts/microcomments')) %>")
+$(".microcomment_content_field").val("");
+// $(".microcomment-form").hide();

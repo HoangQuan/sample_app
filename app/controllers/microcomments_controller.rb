@@ -1,6 +1,6 @@
 class MicrocommentsController < ApplicationController
-  # before_filter :signed_in_user, only: [:index,:edit, :update]
-  # before_filter :correct_user,   only: [:edit, :update]
+  before_filter :signed_in_user, only: [:index,:edit, :update]
+  before_filter :correct_user,   only: [:edit, :update]
   # before_filter :admin_user,     only: :destroy
   # before_filter :build_comment, only: [:new, :create, :index]
   # before_filter :load_microcomment, only: [:edit, :show, :update, :destroy]
@@ -15,14 +15,15 @@ class MicrocommentsController < ApplicationController
   def create
     @comment = Comment.find(params[:microcomment][:comment_id])
     @post = @comment.post
-    limit = 5
-    if params[:page].to_i >= 1 && params[:page].to_i <= (@post.comments.count.to_f/5).ceil
+    limit = 3
+    if params[:page].to_i >= 1 && params[:page].to_i <= (@post.comments.count.to_f/3).ceil
       offset = params[:page] ? (params[:page].to_i - 1)*limit : 0
     end
     @microcomment =  Microcomment.new(params[:microcomment])
     if @microcomment.save
       @comments = @post.comments.order_by_created
       @microcomments = @comment.microcomments
+      @comment = @comment
       respond_to do |format|
         format.js
       end
