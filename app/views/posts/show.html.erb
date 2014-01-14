@@ -1,0 +1,48 @@
+<div class = "post-show">
+<table class = "table table-bordered" id="post-table">
+  <tr>
+    <td width = "45px"><%= gravatar_for @post.user, size: 40 %></td>
+    <td><%= @post.content %></td>
+  </tr>
+  <tr>
+    <th colspan = "2">Comment</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+    	<div class = "table table-bordered table-striped comment">
+        <div id="tr-comment">
+      		<%= render "comments" %>
+        </div>
+    	</div>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+  	<td>
+      <div class="td-paging">
+    		<%= render "paging"%>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <%= form_for @post.comments.build, remote: true, url: { controller: "comments", action: "create" } do |f| %>
+        <%= f.text_field :content %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.hidden_field :post_id, value: @post.id %>
+        <%= f.submit "Send", class: "btn btn-large comment-submint" %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+</div>
+<script type="text/javascript">
+$("#comment_content").keypress(function(event) {
+  if (event.which == 13) {
+      event.preventDefault();
+      $("form").submit();
+  }
+});
+</script>

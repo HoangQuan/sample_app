@@ -1,0 +1,16 @@
+<% total_page = (@post.comments.count.to_f/3).ceil%>
+<% current_page = params[:page] ? params[:page].to_i : 1 %>
+<% if total_page > 1%>
+<%= link_to 'Fisrt', post_path(@post, page: 1), remote: true, class: "btn"%>
+<% if current_page > 1 %>
+	<%= link_to "<", post_path(@post, page: (current_page - 1)), remote: true,  id: "previous", class: "btn" %>
+<% end %>
+<%= link_to "#{current_page - 1}", post_path(@post, page: (current_page - 1)), id: "page#{current_page - 1}", remote: true, class: "btn" if current_page > 1%>
+<%= link_to "#{current_page}", post_path(@post, page: current_page), remote: true, id: "page#{current_page}", class: "btn" %>
+<%= link_to "#{current_page + 1}", post_path(@post, page: (current_page + 1)), remote: true, id: "page#{current_page + 1}", class: "btn" if current_page < total_page %>
+<% if current_page < total_page %>
+	<%= link_to ">", post_path(@post, page: (current_page + 1)), remote: true, id: "next", class: "btn" %>
+<% end %>
+<%= link_to 'Last', post_path(@post, page: total_page), remote: true, :"data-replace" => '#some_id',  class: "btn"%>
+<%= "( Total page = #{total_page} )"%>
+<% end %>
