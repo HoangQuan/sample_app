@@ -33,7 +33,7 @@
     <td></td>
     <td>
       <%= form_for @post.comments.build, remote: true, url: { controller: "comments", action: "create" }, html: {id: "content-form"} do |f| %>
-        <%= f.text_field :content %>
+        <%= f.text_field :content , class: "comment_textarea" %>
         <%= f.hidden_field :user_id, value: current_user.id %>
         <%= f.hidden_field :post_id, value: @post.id %>
         <%= f.submit "Send", class: "btn btn-large comment-submint" %>
@@ -49,4 +49,5 @@ $("#comment_content").keypress(function(event) {
       $("#content-form").submit();
   }
 });
+tinymce.init({selector:'.comment_textarea'});
 </script>
