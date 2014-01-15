@@ -2,102 +2,41 @@
 <div class = "content">
 <table class = "table table-bordered table-striped">
   <% @posts.each  do |post| %>
+  	<tr>
+  		<td width="5%"><%= gravatar_for post.user, size: 20 %></td>
+  		<td><%= post.title %></td>
+  	</tr>
     <tr>
-      <td width="20%"><%= gravatar_for post.user, size: 30 %></td>
+      <td width="10%"></td>
       <td>
-      	<%= post.content %>
       	<div class="post-delete"><%=link_to "x", post_path(post), method: :delete, data: {confirm: "delete"}, class: "delete"%></div>
+      	<%= short_content(post.content).try(:html_safe) %>
       	<div class="post-detail"><%=link_to "xem them..", post_path(post) %></div>
       </td>
     </tr>
   <% end %>
   <tr>
-  	<td colspan = "2" align="center">
+  	<td colspan = "2">
+		<% total_page = (Post.count.to_f/3).ceil%>
+		<% current_page = params[:page] ? params[:page].to_i : 1 %>
+  	<% if total_page > 1 %>
   		<%= link_to "Fisrt","?page=1", id: "first", class: "btn" %>
-  		<%= link_to "<","#", id: "previous", class: "btn" %>
-  		<% total_page = (Post.count.to_f/3).ceil%>
+  		<%= link_to "<","?page=#{current_page - 1}", id: "previous", class: "btn" %>
   		<% (1..total_page).each do |page|%>
-  			<%= link_to "#{page}","?page=#{page}", id: "#{page}", class: "btn" %>
+  		<%= link_to "#{page}","?page=#{page}", id: "#{page}", class: "btn" %>
   		<% end %>
-  		<%= link_to ">","#", id: "next", class: "btn" %>
+  		<%= link_to ">","?page=#{current_page + 1}", id: "next", class: "btn" %>
   		<%= link_to "Last", "?page=#{total_page}", id: "last", class: "btn" %></td>
+  	<% end %>
   </tr>
 </table>
 </div>
 <div class = "test"></div>
 <h3>create post</h3>
-    <%= form_for @post do |f| %>
-
-      <%= f.label :content %>
-      <%= f.text_field :content %>
-
-      <%= f.submit "Send", class: "btn btn-large btn-primary" %>
-    <% end %>
-<script>
-	var current_page = parseInt('<%= params[:page] ? params[:page].to_i : 1 %>');
-	$("#first").click(function(event){
-		event.preventDefault();
-		current_page = 1;
-		alert(current_page);
-		$.ajax({
-			url: '<%= posts_path %>',
-			dataType: 'html',
-			data: "page=" + current_page,
-			success: function(data){
-				$(".content").html(data);
-			}
-		});
-	})
-
-	$("#previous").click(function(event){
-		event.preventDefault();
-		if (current_page == 1){
-			alert("trang dau roi con gi nua");
-			current_page = 1;
-		}else{
-			current_page -= 1 ;
-		}
-		alert(current_page);
-		$.ajax({
-			url: '<%= posts_path %>',
-			dataType: 'html',
-			data: "page=" + current_page,
-			success: function(data){
-				$(".content").html(data);
-			}
-		});
-	})
-
-	$("#next").click(function(event){
-		event.preventDefault();
-		var trang_cuoi = parseInt('<%= total_page %>');
-		if (current_page == trang_cuoi){
-			alert("trang cmn cuoi roi con gi nua");
-			current_page= trang_cuoi;
-		}else{
-			current_page += 1 ;
-		}
-		alert(current_page);
-		$.ajax({
-			url: '<%= posts_path %>',
-			dataType: 'html',
-			data: "page=" + current_page,
-			success: function(data){
-				$(".content").html(data);
-			}
-		});
-	})
-	$("#last").click(function(event){
-		event.preventDefault();
-		current_page = '<%= total_page %>';
-		alert(current_page);
-		$.ajax({
-			url: '<%= posts_path %>',
-			dataType: 'html',
-			data: "page=" + current_page,
-			success: function(data){
-				$(".content").html(data);
-			}
-		});
-	})
-</script>
+<%= form_for @post do |f| %>
+	<%= f.label :title %>
+	<%= f.text_field :title %>
+	<%= f.label :content %>
+	<%= f.cktext_area :content,  class: %W(ckeditor) %>
+	<%= f.submit "Send", class: "btn btn-large btn-primary" %>
+<% end %>
