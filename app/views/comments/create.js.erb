@@ -1,5 +1,9 @@
 $(".comment").html("");
 // $("#tr-comment").html("");
 $(".comment").html("<%= escape_javascript(render('posts/comments')) %>")
+<% @comments.each do |comment|%>
+$("#tr-microcomment<%=@comment.id%>").html("")
+$("#tr-microcomment<%=@comment.id%>").html("<%= escape_javascript(render('posts/microcomments')) %>")
+<% end %>
 $("#comment_content").val("");
 $(".td-paging").html("<%= escape_javascript(render('posts/paging')) %>")

@@ -2,7 +2,7 @@ class CreateMicrocomments < ActiveRecord::Migration
   def change
     create_table :microcomments do |t|
       t.integer :comment_id
-      t.string :content
+      t.text :content
 
       t.timestamps
     end
