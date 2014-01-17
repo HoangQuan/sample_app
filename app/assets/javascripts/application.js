@@ -19,5 +19,4 @@
 //= require bootstrap
 //= require ckeditor/init
 //= require ckeditor/override
-//= require slippry
 //= require_tree .

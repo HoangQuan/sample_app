@@ -78,7 +78,31 @@
               <li><%= link_to "Link2", "/path2"  %></li>
               <li><%= link_to "Link3", "/path3"  %></li>
             </ul>
+            <ul class="nav pull-right">
+              <% if signed_in? %>
+                <li><%= link_to "Users", users_path %></li>
+                <li><%= link_to "Posts", posts_path %></li>
+                <li id="fat-menu" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Account <b class="caret"></b>
+                </a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to "Profile", current_user %></li>
+                    <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+                    <li class="divider"></li>
+                    <li>
+                      <%= link_to "Sign out", signout_path, method: "delete" %>
+                    </li>
+                  </ul>
+                </li>
+              <% else %>
+                <li><%= link_to "Sign in", signin_path %></li>
+              <% end %>
+            </ul>
           </div><!--/.nav-collapse -->
+          <div class="container nav-collapse">
+            
+          </div>
         </div>
       </div>
     </div>
