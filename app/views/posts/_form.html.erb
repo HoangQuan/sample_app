@@ -1,0 +1,7 @@
+<%= form_for @post do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :content %>
+  <%= f.cktext_area :content,  class: %W(ckeditor) %>
+  <%= f.submit "Send", class: "btn btn-large btn-primary" %>
+<% end %>

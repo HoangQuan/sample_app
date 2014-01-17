@@ -1,42 +1,51 @@
 <% provide(:title, current_user.name) %>
+<h3><%= link_to "Create post", new_post_path , class: "btn btn-primary" %></h3>
+<% if @posts.count == 0%>
+	<%= form_for @post do |f| %>
+	  <%= f.label :title %>
+	  <%= f.text_field :title %>
+	  <%= f.label :content %>
+	  <%= f.cktext_area :content,  class: %W(ckeditor) %>
+	  <%= f.submit "Send", class: "btn btn-large btn-primary" %>
+	<% end %>
+<% end %>
 <div class = "content">
 <table class = "table table-bordered table-striped">
   <% @posts.each  do |post| %>
   	<tr>
   		<td width="5%"><%= gravatar_for post.user, size: 20 %></td>
-  		<td><%= post.title %></td>
+  		<td>
+  			<div class="post-delete"><%=link_to "x", post_path(post), method: :delete, data: {confirm: "delete"}, class: "delete"%></div>
+  			<%= post.title %></td>
   	</tr>
     <tr>
       <td width="10%"></td>
       <td>
-      	<div class="post-delete"><%=link_to "x", post_path(post), method: :delete, data: {confirm: "delete"}, class: "delete"%></div>
       	<%= short_content(post.content).try(:html_safe) %>
-      	<div class="post-detail"><%=link_to "xem them..", post_path(post) %></div>
+      	<div class="post-detail"><%=link_to "xem them..", post_path(post), class: "delete" %></div>
       </td>
     </tr>
   <% end %>
   <tr>
   	<td colspan = "2">
-		<% total_page = (Post.count.to_f/3).ceil%>
-		<% current_page = params[:page] ? params[:page].to_i : 1 %>
-  	<% if total_page > 1 %>
-  		<%= link_to "Fisrt","?page=1", id: "first", class: "btn" %>
-  		<%= link_to "<","?page=#{current_page - 1}", id: "previous", class: "btn" %>
-  		<% (1..total_page).each do |page|%>
-  		<%= link_to "#{page}","?page=#{page}", id: "#{page}", class: "btn" %>
-  		<% end %>
-  		<%= link_to ">","?page=#{current_page + 1}", id: "next", class: "btn" %>
-  		<%= link_to "Last", "?page=#{total_page}", id: "last", class: "btn" %></td>
-  	<% end %>
+  		<div class="td-paging">
+			<% total_page = (Post.count.to_f/3).ceil%>
+			<% current_page = params[:page] ? params[:page].to_i : 1 %>
+	  	<% if total_page > 1 %>
+	  		<%= link_to "Fisrt","?page=1", id: "first", class: "btn" %>
+	  		<% if current_page > 1%>
+	  		<%= link_to "<","?page=#{current_page - 1}", id: "previous", class: "btn" %>
+	  		<% end %>
+	  		<% (1..total_page).each do |page|%>
+	  		<%= link_to "#{page}","?page=#{page}", id: "#{page}", class: "btn" %>
+	  		<% end %>
+	  		<% if current_page < total_page %>
+	  		<%= link_to ">","?page=#{current_page + 1}", id: "next", class: "btn" %>
+	  		<% end %>
+	  		<%= link_to "Last", "?page=#{total_page}", id: "last", class: "btn" %>
+	  		</div>
+	  	<% end %>
+	  </td>
   </tr>
 </table>
 </div>
-<div class = "test"></div>
-<h3>create post</h3>
-<%= form_for @post do |f| %>
-	<%= f.label :title %>
-	<%= f.text_field :title %>
-	<%= f.label :content %>
-	<%= f.cktext_area :content,  class: %W(ckeditor) %>
-	<%= f.submit "Send", class: "btn btn-large btn-primary" %>
-<% end %>

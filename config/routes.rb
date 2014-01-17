@@ -2,6 +2,9 @@ SampleApp::Application.routes.draw do
   get "users/new"
   resources :users do
   end
+  namespace :admin do
+    resources :users
+  end
   resources :posts
   resources :comments
   resources :microcomments

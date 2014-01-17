@@ -11,6 +11,9 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'mysql2'
 gem "pry"
 gem "ckeditor", :git => "git@github.com:galetahub/ckeditor.git"
+gem "twitter-bootstrap-rails", git: "http://github.com/seyhunak/twitter-bootstrap-rails.git"
+gem "therubyracer"
+gem "less-rails"
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'

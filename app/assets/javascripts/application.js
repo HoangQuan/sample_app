@@ -12,10 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require_tree .
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
 //= require ckeditor/init
 //= require ckeditor/override
+//= require slippry
 //= require_tree .

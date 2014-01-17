@@ -13,31 +13,28 @@
   </aside>
 </div>
 <table align= "center" boder="1" cellspadding="1">
-          <tr>
-            <td>name</td>
-            <td>email</td>
-          </tr> 
-          <tr>
-            <td><%= @user.name %></td>
-            <td><%= @user.email %></td>
-          </tr> 
+  <tr>
+    <td colspan="2"><h3>All Your Post</h3></td>
+  </tr> 
 </table>
 <table class = "table table-bordered table-striped">
   <% current_user.posts.each  do |post| %>
     <tr>
-      <td><%= gravatar_for post.user, size: 25 %></td>
-      <td><%=link_to post.title, post_path(post) %></td>
+      <td width="10%"><%= gravatar_for post.user, size: 25 %></td>
+      <td width="70%"><%=link_to post.title, post_path(post) %><br />
+        <%= short_content(post.content).html_safe %>
+      </td>
       <td><%= "Đã có lượt #{post.comments.count} comments" %></td>
     </tr>
   <% end %>
 </table>
-<h3>create post</h3>
+<h3>Create post</h3>
     <%= form_for current_user.posts.build do |f| %>
       <%= render 'shared/error_messages' %>
       <%= f.label :title %>
       <%= f.text_field :title %>
       <%= f.label :content %>
-      <%= f.text_field :content %>
+      <%= f.cktext_area :content %>
 
       <%= f.submit "Send", class: "btn btn-large btn-primary" %>
     <% end %>

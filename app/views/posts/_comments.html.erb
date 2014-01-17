@@ -1,12 +1,12 @@
 <% @comments.each_with_index do |comment, i|%>
-<table class="table table-bordered table-striped">
+<table width="70%" class="table table-bordered table-striped">
 	<tr>
 		<td width="25"><%= gravatar_for comment.user, size:25 %></td>
-		<td>
-			<div class ="comment-content">
+		<td width="700px">
+			<div class ="comment-content" width="700px">
 				<%= comment.content.try(:html_safe) %>
 				<%=link_to "x", comment_path(comment), method: :delete, data: {confirm: "delete"}, class: "delete"%>
-				<table class = "table microcomment table-bordered table-striped">
+				<table width="70%" class = "table microcomment table-bordered table-striped">
           <tr>
           	<td colspan="2" id="tr-microcomment<%=comment.id%>">
         		<%= render "posts/microcomments", comment: comment %>
