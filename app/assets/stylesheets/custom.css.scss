@@ -210,3 +210,12 @@ input {
 .carousel-caption {
   padding: 10px 10px;
 }
+
+.container ul li a {
+  border: 1px solid #EBF3F2;
+  /*background-color: #EBF3F2;*/
+}
+
+.container .pull-left > li a:hover {
+  color: #0088cc;
+}

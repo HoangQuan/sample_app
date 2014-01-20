@@ -2,7 +2,14 @@ SampleApp::Application.routes.draw do
   get "users/new"
   resources :users do
   end
+  namespace :admin do 
+    resources :users
+    resources :posts
+    resources :products
+    resources :product_types
+  end
   resources :posts
+  resources :products
   resources :comments
   resources :microcomments
   resources :sessions, only: [:new, :create, :destroy]

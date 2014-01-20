@@ -10,6 +10,9 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'mysql2'
 gem "pry"
+gem "kaminari"
+gem "ransack"
+gem 'carrierwave'
 gem "ckeditor", :git => "git@github.com:galetahub/ckeditor.git"
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

@@ -1,0 +1,32 @@
+.tr-search {
+	vertical-align: top
+}
+#q_product_type_id_eq {
+	padding: 0px;
+}
+.product-image {
+	border: 1px solid #E8EAF3;
+	text-align: center;
+}
+
+.product-image:hover {
+	border: 1px solid #4450AF;
+	background-color: #EBF3F2;
+}
+select{
+	padding: 0px;
+}
+.table-show-product tr td{
+	text-align: center;
+	height: 100px;
+}
+.fb-api{
+	text-align:center; 
+}
+.td-product{
+	height: 155px;
+}
+.td-product img {
+	height: 150px;
+	width: 130px;
+}

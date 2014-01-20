@@ -1,0 +1,75 @@
+<section id="product-show">
+<table class="table table-show-product">
+		Hay den voi chung toi
+		chung toi cam doan ve gia tri sam pham
+	<tr>
+		<td><%= link_to (image_tag(@product.product_image1? ? @product.product_image1 : "http://images2.wikia.nocookie.net/__cb20111016135244/caw/images/9/9f/No-Image-Available.gif", width: "150", height: "180")), "", class: "shop_detail1" %>
+      <div><%= link_to "Phóng to", "#", class: "shop_detail1" %></div>
+    </td>
+		<td><%= link_to (image_tag(@product.product_image2? ? @product.product_image2 : "http://images2.wikia.nocookie.net/__cb20111016135244/caw/images/9/9f/No-Image-Available.gif", width: "150", height: "180")), "#", class: "shop_detail2"%>
+      <div><%= link_to "Phóng to", "", class: "shop_detail2" %></div>
+    </td>
+		<td><%= link_to (image_tag(@product.product_image3? ? @product.product_image3 : "http://images2.wikia.nocookie.net/__cb20111016135244/caw/images/9/9f/No-Image-Available.gif", width: "150", height: "180")), "#", class: "shop_detail3"%>
+      <div><%= link_to "Phóng to", "", class: "shop_detail3" %></div>
+    </td>
+	</tr>
+	<tr>
+		<td colspan="3" >
+			<div><%= @product.name %></div>
+      <div>Size: <%= @product.size %></div>
+      <div>Type: <%= @product.product_type.try(:name) %></div>
+      <div>Giá chỉ: <%= @product.price %> VND</div>
+			Lien he voi chung toi: sdt: xxxxxxxxxxx
+		</td>
+	</tr>
+</table>
+<div id="product-show">
+  <%= render "product1_show_modal"%>
+  <%= render "product2_show_modal"%>
+  <%= render "product3_show_modal"%>
+</div>
+</section>
+<div class="fb-api">
+  	<div class="fb-like" data-href="https://www.facebook.com/ShopMixuMisa" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+  	<div class="fb-share-button" data-href="https://www.facebook.com/ShopMixuMisa" data-type="button_count"></div>
+   <div id="fb-root"></div>
+   <div class="fb-comments" data-href="https://www.facebook.com/ShopMixuMisa" data-numposts="5" data-colorscheme="light"></div>
+</div>
+<script>
+// function share
+	(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=767124323302603";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
+<!-- comment box -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=767124323302603";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div id="fb-root"></div>
+<!-- like box -->
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=767124323302603";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!-- like buttom -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=767124323302603";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
