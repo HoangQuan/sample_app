@@ -28,12 +28,12 @@ test:
   timeout: 5000
 
 production:
-  adapter: mysql2
-  encoding: utf8
+  adapter: postgresql
+  encoding: unicode
   reconnect: false
-  database: blogs_production
+  database: d7jhudor84q5uj
   pool: 5
-  username: root
-  password: "123456"
-  socket: /var/run/mysqld/mysqld.sock
-  timeout: 5000
+  username: gpaprvpxznmitt
+  port: 5432
+  host: ec2-54-225-101-202.compute-1.amazonaws.com
+  password: "l5A_5-GOAmywrGwPGlol1IgpBz"
