@@ -13,7 +13,7 @@ gem "pry"
 gem "kaminari"
 gem "ransack"
 gem 'carrierwave'
-gem "ckeditor", :git => "git@github.com:galetahub/ckeditor.git"
+gem "ckeditor", '4.0.4'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
