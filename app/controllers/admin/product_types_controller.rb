@@ -2,7 +2,7 @@ class Admin::ProductTypesController < Admin::AdminController
   before_filter :admin_user
 
   def index
-    @product_types = Admin::ProductType.order(:updated_at).page(params[:page]).per(5)
+    @product_types = Admin::ProductType.order(:updated_at).page(params[:page])
   end
   def new
     @product_type = Admin::ProductType.new
@@ -13,7 +13,7 @@ class Admin::ProductTypesController < Admin::AdminController
   end
 
   def create
-    @product_type = Admin::ProductType.new(params.require(:admin_product_type).permit(:name))
+    @product_type = Admin::ProductType.new(params[:admin_product_type])
     if @product_type.valid?
       @product_type.save
       redirect_to admin_product_type_path(@product_type), notice: :".created"
@@ -28,7 +28,7 @@ class Admin::ProductTypesController < Admin::AdminController
 
   def update
     @product_type = Admin::ProductType.find(params[:id])
-    product_type = params.require(:admin_product_typre).permit(:name)
+    product_type = params[:admin_product_type]
     if @product_type.update(product_type)
       redirect_to admin_product_type_path(@product_type), notice: :".updateted"
     else

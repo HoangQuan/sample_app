@@ -28,16 +28,16 @@
       <td><%= @product.status==1 ? "Còn Hàng" : "Hết Hàng"%></td>
     </tr>
     <tr>
-      <th>Image fb1: </th>
-      <td><%= image_tag @product.image_fb_url1 if @product.image_fb_url1 %></td>
+      <th>Image 1: </th>
+      <td><%= image_tag @product.product_image1 if @product.product_image1 %></td>
     </tr>
     <tr>
-      <th>Image fb2: </th>
-      <td><%= image_tag @product.image_fb_url2 if @product.image_fb_url2 %></td>
+      <th>Image 2: </th>
+      <td><%= image_tag @product.product_image2 if @product.product_image2 %></td>
     </tr>
     <tr>
-      <th>Image fb3: </th>
-      <td><%= image_tag @product.image_fb_url3 if @product.image_fb_url3 %></td>
+      <th>Image 3: </th>
+      <td><%= image_tag @product.product_image3 if @product.product_image3 %></td>
     </tr>
     <tr>
       <td colspan="2">

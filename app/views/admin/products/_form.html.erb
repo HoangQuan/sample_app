@@ -19,23 +19,23 @@
       <td><%= f.number_field :amount%></td>
     </tr>
     <tr>
-      <td>Image fb url1: </td>
+      <td>Image 1: </td>
       <td>
-        <%= f.text_field :product_image1 %>
+        <%= f.file_field :product_image1 %>
         <%= image_tag @product.product_image1 if @product.product_image1 %>
       </td>
     </tr>
     <tr>
-      <td>Image fb url2: </td>
+      <td>Image 2: </td>
       <td>
-        <%= f.text_field :product_image2 %>
+        <%= f.file_field :product_image2 %>
         <%= image_tag @product.product_image2 if @product.product_image2 %>
       </td>
     </tr>
     <tr>
-      <td>Image fb url3: </td>
+      <td>Image 3: </td>
       <td>
-        <%= f.text_field :product_image3 %>
+        <%= f.file_field :product_image3 %>
         <%= image_tag @product.product_image3 if @product.product_image3 %>
       </td>
     </tr>
