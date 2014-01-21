@@ -1,7 +1,7 @@
 <% @comments.each_with_index do |comment, i|%>
 <table class="table table-bordered table-striped">
 	<tr>
-		<td width="25"><%= image_tag(comment.user.avatar) %></td>
+		<td width="25"><%= comment.user.avatar.present? ? image_tag(comment.user.avatar) : image_tag("http://www.sancoso.com/app/views/default/static/img/no-avatar.png") %><%= image_tag(comment.user.avatar) %></td>
 		<td>
 			<div class ="comment-content">
 				<%= comment.content.try(:html_safe) %>

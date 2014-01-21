@@ -29,15 +29,15 @@
     </tr>
     <tr>
       <th>Image 1: </th>
-      <td><%= image_tag @product.product_image1 if @product.product_image1 %></td>
+      <td><%= image_tag @product.product_image1 if @product.product_image1? %></td>
     </tr>
     <tr>
       <th>Image 2: </th>
-      <td><%= image_tag @product.product_image2 if @product.product_image2 %></td>
+      <td><%= image_tag @product.product_image2 if @product.product_image2? %></td>
     </tr>
     <tr>
       <th>Image 3: </th>
-      <td><%= image_tag @product.product_image3 if @product.product_image3 %></td>
+      <td><%= image_tag @product.product_image3 if @product.product_image3? %></td>
     </tr>
     <tr>
       <td colspan="2">

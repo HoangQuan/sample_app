@@ -30,3 +30,6 @@ select{
 	height: 150px;
 	width: 130px;
 }
+.table-show-product tbody tr td img {
+	height: 170px;
+}

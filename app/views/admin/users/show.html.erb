@@ -4,7 +4,7 @@
   <% end %>
   <table class="table table-striped table-bordered"> 
     <tr>
-      <th rowspan="8" width="30%"><%= image_tag(@user.avatar)%></th>
+      <th rowspan="8" width="30%"><%= @user.avatar.present? ? image_tag(@user.avatar) : image_tag("http://www.sancoso.com/app/views/default/static/img/no-avatar.png") %></th>
     </tr>
     <tr>
       <th>ID: </th>
