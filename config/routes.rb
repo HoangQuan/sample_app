@@ -1,5 +1,5 @@
 SampleApp::Application.routes.draw do
-  get "users/new"
+  get "products/index"
   resources :users
   namespace :admin do 
     resources :users, except: [:new, :create]
