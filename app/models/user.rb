@@ -1,9 +1,13 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation, :remember_token
+  require 'carrierwave/orm/activerecord'
+  attr_accessible :email, :name, :password, :password_confirmation, :remember_token, :avatar, :tel, 
+   :uid
   has_secure_password #de khai bao kei password va co the su dung authenticate
   # dam bao rang dia chi email co chu HOA va chu Thuong cung nhu nhau
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
+
+  mount_uploader :avatar, AvatarUploader
   
   validates :name,  presence: true, :length => { :maximum => 50,:minimum =>6 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

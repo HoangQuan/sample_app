@@ -3,7 +3,7 @@
 <table class = "table table-bordered table-striped">
   <% @posts.each  do |post| %>
   	<tr>
-  		<td width="5%"><%= gravatar_for post.user, size: 20 %></td>
+  		<td width="5%"><%= image_tag(post.user.avatar)%></td>
   		<td><%= post.title %></td>
   	</tr>
     <tr>
@@ -32,7 +32,7 @@
 </table>
 </div>
 <div class = "test"></div>
-<h3>create post</h3>
+<h3>Create post</h3>
 <%= form_for @post do |f| %>
 	<%= f.label :title %>
 	<%= f.text_field :title %>

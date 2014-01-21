@@ -9,12 +9,12 @@ module SessionsHelper
   end
 	def current_user=(user)
 	    @current_user = user
-  	end
+	end
 
-  	def current_user
-    	@current_user ||= User.find_by_remember_token(cookies[:remember_token])
-  	end
-    def sign_out
+	def current_user
+  	@current_user ||= User.find_by_remember_token(cookies[:remember_token])
+	end
+  def sign_out
     self.current_user = nil #lam rong bien current_user
     cookies.delete(:remember_token) # xoa cookie
   end
@@ -28,5 +28,9 @@ module SessionsHelper
 
   def store_location
     session[:return_to] = request.url
+  end
+
+  def correct_user? user
+    current_user?(user)
   end
 end

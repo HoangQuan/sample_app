@@ -1,5 +1,5 @@
 class Admin::UsersController < Admin::AdminController
-  before_filter :admin_user
+  # before_filter :admin_user
 
   def index
     @users = User.order(:updated_at).page(params[:page])
@@ -13,6 +13,7 @@ class Admin::UsersController < Admin::AdminController
   end
 
   def create
+    binding.pry
     @user = Admin::User.new(params.require(:admin_user).permit(:name, :admin))
     if @user.valid?
       @user.save

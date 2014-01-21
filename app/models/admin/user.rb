@@ -1,4 +1,5 @@
 class Admin::User < ActiveRecord::Base
+  require 'carrierwave/orm/activerecord'
   attr_accessible :email, :name, :password, :password_confirmation, :remember_token
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
@@ -10,6 +11,8 @@ class Admin::User < ActiveRecord::Base
       user.save!
     end
   end
+
+  mount_uploader :avatar, AvatarUploader
 
   def large_image
     "http://graph.facebook.com/#{self.uid}/picture?type=large"

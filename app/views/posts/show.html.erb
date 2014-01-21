@@ -1,8 +1,11 @@
 <div class = "post-show">
 <table class = "table table-bordered" id="post-table">
   <tr>
-    <td width = "45px"><%= gravatar_for @post.user, size: 40 %></td>
-    <td><%= @post.title %></td>
+    <td width = "45px"><%= image_tag(@post.user.avatar) %></td>
+    <td>
+      <div class="post-delete"><%=link_to "Edit", edit_post_path(@post), class: "delete"%></div>
+      <div class="post-title"><%= @post.title %></div>
+    </td>
   </tr>
   <tr>
     <td></td>

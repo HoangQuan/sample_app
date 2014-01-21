@@ -12,16 +12,20 @@
       <%= f.label :email %>
       <%= f.text_field :email %>
 
+      <%= f.label :tel %>
+      <%= f.text_field :tel %>
+
       <%= f.label :password %>
       <%= f.password_field :password %>
 
       <%= f.label :password_confirmation, "Confirm Password" %>
       <%= f.password_field :password_confirmation %>
 
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+      <%= @user.avatar.present? ? image_tag(@user.avatar) : image_tag("http://www.sancoso.com/app/views/default/static/img/no-avatar.png") %>
+      <%= f.file_field :avatar %><br />
+
+      <%= f.submit "Save", class: "btn btn-large btn-primary" %><%= link_to "Cancel", user_path(@user), class: "btn btn-large"%>
     <% end %>
 
-    <%= gravatar_for @user %>
-    <a href="http://gravatar.com/emails">change</a>
   </div>
 </div>

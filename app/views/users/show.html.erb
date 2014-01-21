@@ -6,38 +6,36 @@
       	<% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= value %></div>
       <% end %>
-        <%= gravatar_for @user, size: 52 %>
-        <%= @user.name %>
       </h1>
     </section>
   </aside>
 </div>
-<table align= "center" boder="1" cellspadding="1">
-          <tr>
-            <td>name</td>
-            <td>email</td>
-          </tr> 
-          <tr>
-            <td><%= @user.name %></td>
-            <td><%= @user.email %></td>
-          </tr> 
+<h2>User Profile</h2>
+<table class="table table-bordered table-striped" width="40%">
+  <tr>
+    <td rowspan = "5" width="130"><%= @user.avatar.present? ? image_tag(@user.avatar) : image_tag("http://www.sancoso.com/app/views/default/static/img/no-avatar.png") %></td>
+  </tr>
+  <tr>
+    <td>Name: <%= @user.name %></td>
+  </tr>
+  <tr>
+    <td>Email: <%= @user.email %></td>
+  </tr>
+  <tr>
+    <td>Phone Number: <%= @user.tel %></td>
+  </tr>
+  <tr>
+    <td colspan="2">Posts: <%= @user.posts.count %></td>
+  </tr>
+  <tr><td><%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-primary" if correct_user?(@user) %></td></tr>
 </table>
+<h2>User posts</h2>
 <table class = "table table-bordered table-striped">
-  <% current_user.posts.each  do |post| %>
+  <% @user.posts.each  do |post| %>
     <tr>
-      <td><%= gravatar_for post.user, size: 25 %></td>
+      <td width="30px"><%= image_tag(post.user.avatar) %></td>
       <td><%=link_to post.title, post_path(post) %></td>
       <td><%= "Đã có lượt #{post.comments.count} comments" %></td>
     </tr>
   <% end %>
 </table>
-<h3>create post</h3>
-    <%= form_for current_user.posts.build do |f| %>
-      <%= render 'shared/error_messages' %>
-      <%= f.label :title %>
-      <%= f.text_field :title %>
-      <%= f.label :content %>
-      <%= f.text_field :content %>
-
-      <%= f.submit "Send", class: "btn btn-large btn-primary" %>
-    <% end %>

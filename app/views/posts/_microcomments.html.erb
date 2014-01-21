@@ -1,7 +1,7 @@
 <% @micro_comments = @comment.nil? ? comment.microcomments : @comment.microcomments %>
 <% @micro_comments.each_with_index do |mcomment, i|%>
 	<table id="test1" calss="table table-bordered table-striped">
-		<td width="20"><%= gravatar_for mcomment.comment.user, size:20 %></td>
+		<td width="20"><%= image_tag(mcomment.comment.user.avatar)%></td>
 		<td>
 				<%= mcomment.content %>
 		</td>

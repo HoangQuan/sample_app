@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
+  before_filter :load_post, only: [:edit, :show, :update, :destroy]
   before_filter :signed_in_user, only: [:index,:edit, :update]
   before_filter :correct_user,   only: [:edit, :update]
-  # before_filter :admin_user,     only: :destroy
+  before_filter :admin_user,     only: :destroy
   before_filter :build_post, only: [:new, :create, :index]
-  before_filter :load_post, only: [:edit, :show, :update, :destroy]
   def new
   end
   def show
@@ -40,12 +40,11 @@ class PostsController < ApplicationController
   end
   def update
     @post=Post.find(params[:id])
-    if @user.update_attributes(params[:user])
-      flash[:succss]="Profiles updated"
-      sign_in @user
-      redirect_to @user
+    if @post.update_attributes(params[:post])
+      flash[:succss]="Post updated"
+      redirect_to @post
     else 
-      flash[:error]="Invalid information"
+      flash[:error]="Error!"
       render 'edit'
     end
   end
@@ -64,8 +63,8 @@ class PostsController < ApplicationController
     end
 
     def correct_user
-      @post = Post.find(params[:id])
-      redirect_to(root_path)  unless current_user?(@user)
+      @user = @post.user
+      redirect_to(root_path) unless current_user?(@user)
     end
     def admin_user
       flash[:notice] = "You are not Admin"
