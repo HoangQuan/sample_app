@@ -1,7 +1,7 @@
 <% @comments.each_with_index do |comment, i|%>
 <table class="table table-bordered table-striped">
 	<tr>
-		<td width="25"><%= comment.user.avatar.present? ? image_tag(comment.user.avatar) : image_tag("http://www.sancoso.com/app/views/default/static/img/no-avatar.png") %><%= image_tag(comment.user.avatar) %></td>
+		<td width="25"><%= comment.user.avatar.present? ? image_tag(comment.user.avatar) : image_tag("http://www.sancoso.com/app/views/default/static/img/no-avatar.png") %></td>
 		<td>
 			<div class ="comment-content">
 				<%= comment.content.try(:html_safe) %>
@@ -31,12 +31,19 @@
 	<% @comments.each_with_index do |comment, i| %>
   $(document).on("click", ".microcomment_link<%=i%>", function (e){
     e.preventDefault();
-    $(".microcomment-form<%=comment.id%>").html('<%= form_for comment.microcomments.build , remote: true, url: { controller: "microcomments", \
+    var current_user = '<%= current_user %>';
+    if(current_user == ''){
+    	alert('Please signin');
+
+    }
+    else{
+    	$(".microcomment-form<%=comment.id%>").html('<%= form_for comment.microcomments.build , remote: true, url: { controller: "microcomments", \
     	action: "create" }, id: "new_microcomment#{comment.id}" do |ff| %>\
 							    <%= ff.text_field :content, class: "microcomment_content_field" %>\
 							    <%= ff.hidden_field :comment_id, value: comment.id %>\
 							    <%= ff.submit "Send", class: "btn microcomment-submit" %>\
-							  <% end %>');
+							  	<% end %>');
+    }
   })
   <% end %>
 </script>
