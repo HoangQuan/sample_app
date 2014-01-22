@@ -34,6 +34,7 @@
   <% end %>
   </tr>
 <% end %>
+<%= link_to t(".download"), products_path(format: "csv"), class: :btn %>
 <tr><td colspan="5"><%= paginate @products %><td></tr>
 </table>
 

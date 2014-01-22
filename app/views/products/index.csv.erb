@@ -1,0 +1,17 @@
+<% columns_to_be_exported = {id: "Mã SP", name: "Tên Sản Phẩm", size: "Size", price: "Giá", amount: "Số Lượng", product_type_id: "Type", status: "Trạng Thái"} %>
+<%= columns_to_be_exported.values.join(",") %>
+<% Product.order_by_updated.each do |product|
+  row = []
+  columns_to_be_exported.keys.each do |column|
+    row << case column
+    when :product_type_id
+      product.product_type.try(:name) if product.product_type_id
+  	when :status
+      product.send(column) == 1 ? "Còn hàng" : "Hết Hàng"
+    else
+      product.send(column)
+    end
+  end
+%>
+<%= row.join(",") %>
+<% end %>
