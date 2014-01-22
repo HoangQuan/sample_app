@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
-  before_filter :load_post, only: [:edit, :show, :update, :destroy]
-  before_filter :signed_in_user, only: [:edit, :update]
   before_filter :correct_user,   only: [:edit, :update]
+  before_filter :signed_in_user, only: [:new, :edit, :update]
   before_filter :admin_user,     only: :destroy
-  before_filter :build_post, only: [:new, :create, :index]
+  before_filter :build_post, only: [:new, :create]
+  before_filter :load_post, only: [:edit, :show, :update, :destroy]
   def new
   end
   def show
@@ -62,10 +62,6 @@ class PostsController < ApplicationController
       end
     end
 
-    def correct_user
-      @user = @post.user
-      redirect_to(root_path) unless current_user?(@user)
-    end
     def admin_user
       flash[:notice] = "You are not Admin"
       redirect_to(root_path)  unless current_user.admin?
@@ -75,8 +71,13 @@ class PostsController < ApplicationController
       @post = current_user.posts.build
     end
 
-
     def load_post
       @post = Post.find(params[:id])
+    end
+
+    def correct_user
+      @post = Post.find(params[:id])
+      @user = @post.user
+      redirect_to(root_path) unless current_user?(@user)
     end
 end

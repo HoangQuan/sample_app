@@ -1,4 +1,4 @@
-<% provide(:title, current_user.name) %>
+<% provide(:title, "All Posts") %>
 <div class = "content">
 <table class = "table table-bordered table-striped">
   <% @posts.each  do |post| %>
@@ -32,11 +32,4 @@
 </table>
 </div>
 <div class = "test"></div>
-<h3>Create post</h3>
-<%= form_for @post do |f| %>
-	<%= f.label :title %>
-	<%= f.text_field :title %>
-	<%= f.label :content %>
-	<%= f.cktext_area :content,  class: %W(ckeditor) %>
-	<%= f.submit "Send", class: "btn btn-large btn-primary" %>
-<% end %>
+<h3><%= link_to "Create Post", new_post_path, class: "btn btn-large btn-primary"%></h3>
