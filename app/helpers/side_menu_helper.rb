@@ -19,7 +19,7 @@ module SideMenuHelper
         group: :post_managers,
         heading: ->{"#"},
         collapses: {
-          posts: -> {admin_posts_path},
+          posts: -> {posts_path},
           posts_type1: -> {admin_products_path(q: "product_type_id_eq=1")},
           posts_type2: -> {admin_products_path},
           posts_type3: -> {admin_products_path},
