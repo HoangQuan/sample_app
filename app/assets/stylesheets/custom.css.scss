@@ -219,3 +219,12 @@ input {
 .container .pull-left > li a:hover {
   color: #0088cc;
 }
+
+.collapse {
+  background-color: #EBF3F2;
+  margin-left: 25px;
+}
+accordion-group .collapse  a:hover {
+  border: 1px solid #4450AF;
+  background-color: #EBF3F2;
+}

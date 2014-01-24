@@ -3,3 +3,14 @@
 
 en:
   hello: "Hello world"
+  layouts:
+    admin:
+      side_menu:
+        product_managers:
+          header: "Products Manager"
+          products: "All Products"
+        home:
+          header: "Home"
+        post_managers:
+          header: "Posts Manager"
+          posts: "All Posts"

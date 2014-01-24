@@ -48,22 +48,7 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Users", admin_users_path  %></li>
-              <li><%= link_to "Products", admin_products_path %></li>
-              <li><%= link_to "Product_types", admin_product_types_path %></li>
-            </ul>
-          </div><!--/.well -->
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
-          </div>
+          <%= render partial: "layouts/admin/side_menu" %>
         </div><!--/span-->
         <div class="span9">
           <%= yield %>
