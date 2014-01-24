@@ -6,8 +6,6 @@ gem 'rails', '3.2.9'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'factory_girl_rails', '4.1.0'
 gem 'faker', '1.0.1'
-gem 'will_paginate', '3.0.3'
-gem 'bootstrap-will_paginate', '0.0.6'
 gem 'mysql2'
 gem "pry"
 gem "kaminari"
