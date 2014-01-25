@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script id="facebook-jssdk" src="//connect.facebook.net/en_US/all.js#xfbml=1&amp;appId=767124323302603"></script>
+    <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    <title><%= content_for?(:title) ? yield(:title) : "SampleApp" %></title>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+  </head>
+  <body>
+    <!-- Header -->
+  <div id="header">
+    <!-- <h1 id="logo"><a href="#">Shop Meo Meo</a></h1> -->
+    <!-- Navigation -->
+    <div id="navigation">
+      <nav>
+        <ul class="nav pull-left">
+          <% if signed_in? %>
+            <li><%= link_to "Posts", posts_path %></li>
+            <li><%= link_to "Products", products_path %></li>
+            <li><%= link_to "Home", root_path %></li>
+            <li><%= link_to "Help", help_path %></li>
+            <li><%= link_to "Contact", contact_path %></li>
+            <li><%= link_to "About Us", about_path %></li>
+          <% end %>
+        </ul>
+        <ul class="nav pull-right">
+          <% if signed_in? %>
+            <li id="fat-menu" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Account <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Manager", admin_products_path %></li>
+                <li><%= link_to "Profile", current_user %></li>
+                <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+                <li class="divider"></li>
+                <li>
+                  <%= link_to "Sign out", signout_path, method: "delete" %>
+                </li>
+              </ul>
+            </li>
+          <% else %>
+            <li><%= link_to "Sign in", signin_path %></li>
+          <% end %>
+        </ul>
+            <!-- Cart -->
+        <div id="cart"> <a href="#" class="cart-link">Your Shopping Cart</a>
+          <div class="cl">&nbsp;</div>
+          <span>Articles: <strong>4</strong></span> &nbsp;&nbsp; <span>Cost: <strong>$250.99</strong></span> 
+        </div>
+  <!-- End Cart -->
+      </nav>
+    </div>
+    <!-- End Navigation -->
+  </div>
+  <!-- End Header -->
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+                  <!-- Search -->
+              <div class="box search">
+                <h2>Search by <span></span></h2>
+                <div class="box-content">
+                  <%= search_form_for @q do |f| %>
+                    <label>Keyword</label>
+                    <%= f.text_field :name_cont, placeholder: "Từ khóa tìm", class: "field" %>
+                    <label>Category</label>
+                    <%= f.collection_select :product_type_id_eq, ProductType.all, :id, :name, include_blank: "Tất Cả", class: "field" %>
+                    <div class="inline-field">
+                      <label>Price</label>
+                      <%= f.select :price_gteq_any, options_for_select([["", ""], 100, 150, 200]), class: "search_price" %>
+                      <label>to:</label>
+                      <%= f.select :price_lteq_any, options_for_select([["", ""], 200, 250, 300]), class: "search_price" %>
+                    </div>
+                    <td><%= f.submit "Tìm Kiếm", class: "search-submit btn" %></td>
+                  <% end%>
+                </div>
+              </div>
+      <!-- End Search -->
+          </div><!--/.well -->
+          <div class="well sidebar-nav">
+            <!-- Categories -->
+              <div class="box categories">
+                <p> <a href="#" class="bul">Advanced search</a><br />
+                      <a href="#" class="bul">Contact Customer Support</a> </p>
+                <h2>Categories <span></span></h2>
+                <div class="box-content">
+                  <ul>
+                    <% ProductType.all.each do |type|%>
+                    <li><%= link_to type.name, products_path(:"q[product_type_id_eq]" => type.id)%></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+              <!-- End Categories -->
+          </div>
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Like Us</li>
+              <div id = "facebook_like_box">
+                <div class="fb-like-box" data-href="https://www.facebook.com/pages/Shop-Mixu/479644552104276" data-width="210px" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+              </div>
+            </ul>
+          </div>
+        </div><!--/span-->
+        <div class="span9">
+          <%= yield %>
+        </div>
+      </div><!--/row-->
+
+      <footer>
+        <!-- Footer -->
+        <div id="footer">
+          <p class="left"> <a href="#">Home</a> <span>|</span> <a href="#">Support</a> <span>|</span> <a href="#">My Account</a> <span>|</span> <a href="#">The Store</a> <span>|</span> <a href="#">Contact</a> </p>
+          <p class="right"> &copy; 2010 Shop MEO. Design by <a href="http://chocotemplates.com">quandhcn@gmail.com</a> </p>
+        </div>
+        <!-- End Footer -->
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>

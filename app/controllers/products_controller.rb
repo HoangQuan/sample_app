@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-
+ layout "products_layouts"
   def index
     respond_to do |format|
       format.html do
@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @q = Product.order_by_updated.search params[:q]
     @product = Admin::Product.find(params[:id])
   end
 end
