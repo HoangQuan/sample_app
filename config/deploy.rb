@@ -6,7 +6,7 @@ require 'bundler/capistrano'
 set :application, "sample_app"
 
 # Repository
-set :repository,  "https://github.com/Takien-inc/sample_app.git"
+set :repository,  "https://github.com/HoangQuan/sample_app.git"
 set :scm, :git
 
 # RVM
