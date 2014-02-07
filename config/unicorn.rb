@@ -22,7 +22,7 @@ worker_processes 5
 
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
-app_directory = "/usr/local/rails_apps/my_app/current"
+app_directory = "/usr/local/rails_apps/sample_app/current"
 working_directory app_directory # available in 0.94.0+
 
 # listen on both a Unix domain socket and a TCP port,
