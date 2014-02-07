@@ -36,4 +36,11 @@ group :test, :development do
   gem "rspec-rails", "~> 2.11.0"
   gem 'annotate', '2.5.0'
 end
+# Use unicorn as the app server
+gem "unicorn"
 
+# Deploy with Capistrano
+gem "capistrano"
+gem "rvm-capistrano"
+gem "capistrano-ext"
+gem "capistrano_colors"
