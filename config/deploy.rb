@@ -1,59 +1,52 @@
-load "deploy/assets"
-require 'capistrano/ext/multistage'
-require 'bundler/capistrano'
+require "bundler/capistrano"
+require "rvm/capistrano"
 
-# Application name
+server "127.0.0.1", :web, :app, :db, primary: true
+
 set :application, "sample_app"
-
-# Repository
-set :repository,  "https://github.com/HoangQuan/sample_app.git"
-set :scm, :git
-
-# RVM
-require 'rvm/capistrano'
-set :rvm_ruby_string, '2.0.0-p353'
-set :rvm_type, :system
-set :rvm_path, "/usr/local/rvm"
-
-# Deploy user
-set :user, 'deploy'
+set :user, "deploy"
+set :port, 22
+set :deploy_to, "/home/#{user}/apps/#{application}"
+set :deploy_via, :remote_cache
 set :use_sudo, false
-set :default_run_options, :pty => true
 
-# Set tag, branch or revision
-set :current_rev, `git show --format='%H' -s`.chomp
-set :branch do
-  default_tag = current_rev
-  tag = ENV["DEPLOY_TARGET"] || Capistrano::CLI.ui.ask("Tag to deploy ->: [#{default_tag}]")
-  tag = default_tag if tag.empty?
-  tag
-end
+set :scm, "git"
+set :repository, "https://github.com/HoangQuan/sample_app.git"
+set :branch, "master"
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
 
-# for Unicorn
+after "deploy", "deploy:cleanup" # keep only the last 5 releases
+
 namespace :deploy do
-  task :restart, :roles => :web, :except => { :no_release => true } do
-    if File.exist? "#{pid_file}"
-      run "kill -USR2 `cat #{pid_file}`"
+  %w[start stop restart].each do |command|
+    desc "#{command} unicorn server"
+    task command, roles: :app, except: {no_release: true} do
+      run "/etc/init.d/unicorn_#{application} #{command}"
     end
   end
-end
 
-namespace :resque do
-  task :restart do
-    if File.exist? "#{shared_path}/pids/resque.pid"
-      run "kill `cat #{shared_path}/pids/resque.pid`"
+  task :setup_config, roles: :app do
+    sudo "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{application}"
+    sudo "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{application}"
+    run "mkdir -p #{shared_path}/config"
+    put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
+    puts "Now edit the config files in #{shared_path}."
+  end
+  after "deploy:setup", "deploy:setup_config"
+
+  task :symlink_config, roles: :app do
+    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  end
+  after "deploy:finalize_update", "deploy:symlink_config"
+
+  desc "Make sure local git is in sync with remote."
+  task :check_revision, roles: :web do
+    unless `git rev-parse HEAD` == `git rev-parse origin/master`
+      puts "WARNING: HEAD is not the same as origin/master"
+      puts "Run `git push` to sync changes."
+      exit
     end
   end
+  before "deploy", "deploy:check_revision"
 end
-after "deploy:restart", "resque:restart"
-
-# clean up old releases
-set :keep_releases, 2
-after "resque:restart", "deploy:cleanup"
-
-desc "symlinking after precompilation"
-task :symlink, :roles => :app do
-  run "ln -s #{release_path}/config/database.ymls/#{rails_env}.yml #{release_path}/config/database.yml"
-  run "ln -s /mnt/nfs/caches #{release_path}/public/caches"
-end
-before "deploy:assets:precompile", :symlink
