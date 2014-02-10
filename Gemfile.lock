@@ -32,7 +32,6 @@ GEM
       rake
     arel (3.0.3)
     bcrypt-ruby (3.0.1)
-    bootstrap-sass (2.1.0.0)
     builder (3.0.4)
     capistrano (2.15.5)
       highline
@@ -232,7 +231,6 @@ PLATFORMS
 DEPENDENCIES
   annotate (= 2.5.0)
   bcrypt-ruby (= 3.0.1)
-  bootstrap-sass (= 2.1)
   capistrano (~> 2.15)
   capistrano-ext
   capistrano_colors
