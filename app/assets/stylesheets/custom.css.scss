@@ -1,6 +1,6 @@
-//@import "bootstrap";
+@import "bootstrap";
 
-//@import "bootstrap";
+@import "bootstrap";
 
 /* universal */
 
@@ -124,7 +124,6 @@ $grayMediumLight: #eaeaea;
   @include box_sizing;
 }
 /* sidebar */
-$grayLighter: #000000;
 aside {
   section {
     padding: 10px 0;
