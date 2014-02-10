@@ -3,6 +3,15 @@
 	<%= f.label :title %>
 	<%= f.text_field :title %>
 	<%= f.label :content %>
-	<%= f.cktext_area :content,  class: %W(ckeditor) %>
+	<%= f.text_field :content , class: "comment_textarea" %>
 	<%= f.submit "Send", class: "btn btn-large btn-primary" %>
 <% end %>
+<script type="text/javascript">
+$("#comment_content").keypress(function(event) {
+  if (event.which == 13) {
+      event.preventDefault();
+      $("#content-form").submit();
+  }
+});
+tinymce.init({selector:'.comment_textarea'});
+</script>
